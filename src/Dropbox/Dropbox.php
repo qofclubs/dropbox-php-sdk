@@ -24,6 +24,11 @@ use Kunnu\Dropbox\Http\Clients\DropboxHttpClientFactory;
  */
 class Dropbox
 {
+
+    use TeamsTrait;
+
+
+
     /**
      * Uploading a file with the 'uploadFile' method, with the file's
      * size less than this value (~8 MB), the simple `upload` method will be
