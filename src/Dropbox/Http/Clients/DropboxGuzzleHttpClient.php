@@ -29,6 +29,11 @@ class DropboxGuzzleHttpClient implements DropboxHttpClientInterface
     protected $namespaceId = null;
 
     /**
+     * @var string|null
+     */
+    protected $memberId = null;
+
+    /**
      * Create a new DropboxGuzzleHttpClient instance.
      *
      * @param Client $client GuzzleHttp Client
@@ -60,6 +65,7 @@ class DropboxGuzzleHttpClient implements DropboxHttpClientInterface
     {
 
         //Create a global header for the namespace
+        // @see https://developers.dropbox.com/dbx-team-files-guide#namespaces
         if ($this->namespaceId) {
             $headers = array_merge(
                 $headers,
@@ -67,6 +73,19 @@ class DropboxGuzzleHttpClient implements DropboxHttpClientInterface
                     'Dropbox-API-Path-Root' => json_encode([
                                                                '.tag' => 'namespace_id',
                                                                'namespace_id' => $this->namespaceId,
+                                                           ]),
+                ]
+            );
+        }
+
+
+        if ($this->memberId) {
+            $headers = array_merge(
+                $headers,
+                [
+                    'Dropbox-API-Select-User' => json_encode([
+                                                               '.tag' => 'namespace_id',
+                                                               'team_member_id' => $this->memberId,
                                                            ]),
                 ]
             );
@@ -130,5 +149,15 @@ class DropboxGuzzleHttpClient implements DropboxHttpClientInterface
         }
 
         return (string) $body;
+    }
+
+    /**
+     * @param string|null $memberId
+     * @return DropboxGuzzleHttpClient
+     */
+    public function setMemberId(string $memberId)
+    {
+        $this->memberId = $memberId;
+        return $this;
     }
 }
