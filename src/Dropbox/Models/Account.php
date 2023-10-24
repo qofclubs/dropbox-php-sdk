@@ -79,6 +79,11 @@ class Account extends BaseModel
      * @var string
      */
     protected $account_type;
+    /**
+     * @var \Kunnu\Dropbox\Models\RootInfo
+     */
+    private $root_info;
+
 
     /**
      * Create a new Account instance
@@ -106,6 +111,11 @@ class Account extends BaseModel
         if (is_array($account_type) && !empty($account_type)) {
             $this->account_type = $account_type['.tag'];
         }
+
+        //Root ngo /User Model
+        $root_info = $this->getDataProperty('root_info');
+        $this->root_info = new RootInfo($root_info);
+
     }
 
     /**
@@ -232,5 +242,13 @@ class Account extends BaseModel
     public function getAccountType()
     {
         return $this->account_type;
+    }
+
+    /**
+     * @return \Kunnu\Dropbox\Models\RootInfo
+     */
+    public function getRootInfo()
+    {
+        return $this->root_info;
     }
 }
