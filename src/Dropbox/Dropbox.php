@@ -107,6 +107,7 @@ class Dropbox
             'random_string_generator' => null,
             'persistent_data_store' => null,
             'namespace_id' => null,
+            'team_member_id' => null
         ], $config);
 
         //Set the app
@@ -119,6 +120,7 @@ class Dropbox
         $httpClient = DropboxHttpClientFactory::make($config['http_client_handler']);
 
         $httpClient->setNamespace($config['namespace_id']);
+        $httpClient->setTeamMemberId($config['team_member_id']);
 
         //Make and Set the DropboxClient
         $this->client = new DropboxClient($httpClient);

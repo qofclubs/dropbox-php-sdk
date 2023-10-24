@@ -31,7 +31,7 @@ class DropboxGuzzleHttpClient implements DropboxHttpClientInterface
     /**
      * @var string|null
      */
-    protected $memberId = null;
+    protected $teamMemberId = null;
 
     /**
      * Create a new DropboxGuzzleHttpClient instance.
@@ -79,13 +79,13 @@ class DropboxGuzzleHttpClient implements DropboxHttpClientInterface
         }
 
 
-        if ($this->memberId) {
+        if ($this->teamMemberId) {
             $headers = array_merge(
                 $headers,
                 [
                     'Dropbox-API-Select-User' => json_encode([
                                                                '.tag' => 'namespace_id',
-                                                               'team_member_id' => $this->memberId,
+                                                               'team_member_id' => $this->teamMemberId,
                                                            ]),
                 ]
             );
@@ -152,12 +152,12 @@ class DropboxGuzzleHttpClient implements DropboxHttpClientInterface
     }
 
     /**
-     * @param string|null $memberId
+     * @param string|null $teamMemberId
      * @return DropboxGuzzleHttpClient
      */
-    public function setMemberId(string $memberId)
+    public function setTeamMemberId($teamMemberId)
     {
-        $this->memberId = $memberId;
+        $this->teamMemberId = $teamMemberId;
         return $this;
     }
 }
